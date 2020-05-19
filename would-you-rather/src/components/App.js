@@ -1,24 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { initState } from '../actions/initState'
+import { connect } from 'react-redux'
+import Dashboard from './Dashboard'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="" alt="logo" /> */}
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  componentDidMount() { 
+    this.props.dispatch(initState())
+    //console.log(this.props)
+    }
+
+  render() {
+    return (
+      <div className="App">
+        {/* <Dashboard props={this.props}/> wouln't work, you have to use route */}
+        <Router>
+          <Route exact path='/' component={Dashboard} />
+        </Router>
+      </div>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    state: state
+  }
+}
+
+
+export default connect(mapStateToProps)(App);
