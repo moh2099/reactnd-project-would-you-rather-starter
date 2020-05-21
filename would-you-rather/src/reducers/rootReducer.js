@@ -4,7 +4,7 @@ import usersReducer from './usersReducer'
 import questionsReducer from './questionsReducer'
 
 export default combineReducers({
-    authedUser: authedUserReducer,
+    authed: authedUserReducer,
     users: usersReducer,
     questions: questionsReducer,
 })

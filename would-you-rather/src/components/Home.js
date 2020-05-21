@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import Question from './Question'
 import { initState } from '../actions/initState'
 
-class Dashboard extends Component {
-  componentDidMount() { 
+class Home extends Component {
+  componentDidMount() {
     {/*
     //console.log(this.props) 
     this will return this.props.state to be empty object with the reducers in it, e.g. state: { users: {}, questions: {}}
@@ -13,32 +13,40 @@ class Dashboard extends Component {
     this.props will have the valid state object there.
   */}
   }
-  componentDidUpdate() { 
+  componentDidUpdate() {
     //this will not be called for the initial render
-     console.log(this.props)
+    //  console.log(this.props)
   }
+
   render() {
     return (
-      <div>
+      <div className='container'>
         <h3 className='center'>Your Timeline</h3>
         <ul className='dashboard-list'>
-          {/* {
-            this.props.questionIds.map((id) => (
-              <li key={id}>
-                <Question id={id} />
-              </li>
-            ))
-          } */}
+          {
+            this.props.loading ?
+              this.props.questions.map((id) => (
+                //                console.log(question)
+                <li key={id}>
+                  <Question key={id} id={id} />
+                </li>
+              )) : ''
+          }
         </ul>
       </div>
     )
   }
 }
-
-function mapStateToProps(state) {
+//Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+function mapStateToProps({ questions }) {
+  
   return {
-    state: state
+    //users,
+    questions: Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp),
+    loading: Object.keys(questions).length !== 0 ? true : false
+    //loading: Object.keys(users).length !== 0 && Object.keys(questions).length !== 0 ? true : false
+
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToProps)(Home)
