@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class Option extends Component {
     render() {
         const option = this.props.option
-        const optNum = this.props.optNum
+       // const optNum = this.props.optNum
         const questionId = this.props.question
         const countVotes = Object.keys(option.votes).length
         // console.log(option);
