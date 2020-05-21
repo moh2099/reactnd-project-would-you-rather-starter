@@ -50,14 +50,15 @@ class Question extends Component {
     }
 }
 
+//This function is used for passing the stateTree (contains all the states of all dispatched actions) into the props using the connect function
 const mapStateToProps = ({ authed, questions }) => {
     /*
-    Note: you can get whatever you want from dispatches in the initState in this function,
-    however, the variable name is same as the reducer which will be find or can be modified in cmobineReducers function in the rootReducer
+    Note: you can get whatever you want from dispatches in the store from this function,
+    however, the variable name is same as the reducer which will be find or can be modified in combineReducers function in the rootReducer
     */
     return {
         authed,
-        questions: questions
+        questions //here we are using all the questions to get only the required question from them, since we are only passing the question_id as props from the Home component
     }
 }
 

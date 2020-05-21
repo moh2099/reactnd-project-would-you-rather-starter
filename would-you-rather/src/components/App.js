@@ -49,11 +49,12 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
+//if you want to accessthe store, you should use the connect(mapStateToProps) in each component you want to access the store where the object (state) passed to mapStateToProps is the stateTree where all the actions dispatched
+// const mapStateToProps = (state) => {
+//   return {
+//     state: state
+//   }
+// }
 
 
-export default connect(mapStateToProps)(App);
+export default connect()(App); //connect here is necesseary to dispatch the initState, no need for mapStateToProps since we are not using the stateTree here or any state object

@@ -38,10 +38,13 @@ class Home extends Component {
   }
 }
 //Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
-function mapStateToProps({ questions }) {
+
+//This function is used for passing the stateTree (contains all the states of all dispatched actions) into the props using the connect function
+function mapStateToProps({ authed, questions }) {
   
   return {
     //users,
+    authed,
     questions: Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp),
     loading: Object.keys(questions).length !== 0 ? true : false
     //loading: Object.keys(users).length !== 0 && Object.keys(questions).length !== 0 ? true : false
