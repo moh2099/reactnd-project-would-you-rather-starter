@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: "https://tylermcginnis.com/would-you-rather/sarah.jpg",
+    avatarURL: "https://i.insider.com/5af1741f19ee8629008b5075?width=1100&format=jpeg&auto=webp",
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: "https://tylermcginnis.com/would-you-rather/tyler.jpg",
+    avatarURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaPEmJ8iZ9scSewrPEquLBxDLg-DwaOQouToyF-kcZgO72jalJ&usqp=CAU",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: "https://tylermcginnis.com/would-you-rather/dan.jpg",
+    avatarURL: "https://pickaface.net/gallery/avatar/AhmedZkry530cf1c9aea28.png",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',

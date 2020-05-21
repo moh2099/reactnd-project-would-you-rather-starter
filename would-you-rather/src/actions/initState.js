@@ -5,7 +5,7 @@ import { getQuestions } from '../actions/questionsActions'
 import { setAuthedUser } from '../actions/authedUserActions'
 //import { showLoading, hideLoading } from 'react-redux-loading'
  
-const authedUserId = 'tylermcginnis'
+const authedUserId = 'sarahedo'
 
 export const initState = () => {
   return (dispatch) => {
