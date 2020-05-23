@@ -18,13 +18,13 @@ export const getInitState = () => {
 //     }))
 // }
 
-// export const getQuestions = () => { 
-//     return Promise.all([
-//         database._getQuestions()])
-//     .then((questions) => ({ 
-//         questions
-//     }))
-// }
+export const getQuestions = () => { 
+    return Promise.all([
+        database._getQuestions()])
+    .then((questions) => ({ 
+        questions
+    }))
+}
 
 
 
@@ -32,7 +32,7 @@ export function saveQuestion (question) {
     return database._saveQuestion(question)
   }
   
-  export function saveQuestionAnswer (data) { // data = { authedUser, qid, answer }
+export function saveQuestionAnswer(data) { // data = { authedUser, qid, answer }      
     return database._saveQuestionAnswer(data)
   }
 

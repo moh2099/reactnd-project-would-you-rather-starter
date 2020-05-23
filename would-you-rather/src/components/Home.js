@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Question from './Question'
 import { Tab, TabList, Tabs, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
+import { Redirect } from 'react-router-dom'
 //import { initState } from '../actions/initState'
 
 class Home extends Component {
@@ -20,42 +21,55 @@ class Home extends Component {
   //   //  console.log(this.props)
   // }
 
+  // rerender (){
+  //   this.forceUpdate()
+  // }
   render() {
+    let authed = Object.keys(this.props.authed).length > 0 ? this.props.authed.id : null
     return (
       <div className='container'>
-        <h3 className='center'>Your Timeline</h3>
-        <ul className='dashboard-list'>
-          <Tabs forceRenderTabPanel defaultIndex={0}>
-            <TabList>
-              <Tab>Unanswered Questions</Tab>
-              <Tab>Answered Questions</Tab>
-            </TabList>
-            <TabPanel>
-              {
-                this.props.loading !== true ?
-                  this.props.UnansweredQuestions.map((id) => (
-                    // console.log(question)
-                    <li key={id}>
-                      <Question key={id} id={id} />
-                    </li>
-                  )) : ('Loading...')
-              }
-            </TabPanel>
+        {
+          this.props.isLoading === false ? (
+            authed != null ? (
+              <ul className='dashboard-list'>
+                <h3 className='center'>Your Timeline</h3>
+                <Tabs forceRenderTabPanel defaultIndex={0}>
+                  <TabList>
+                    <Tab>Unanswered Questions</Tab>
+                    <Tab>Answered Questions</Tab>
+                  </TabList>
+                  <TabPanel>
+                    {
+                      this.props.UnansweredQuestions.map((id) => (
+                        // console.log(question)
+                        <li key={id}>
+                          <Question isAnswered={false} key={id} id={id} />
+                        </li>
+                      ))
+                    }
+                  </TabPanel>
 
-            <TabPanel>
-            {
-                this.props.loading !== true ?
-                  this.props.AnsweredQuestions.map((id) => (
-                    // console.log(question)
-                    <li key={id}>
-                      <Question key={id} id={id} />
-                    </li>
-                  )) : ('Loading...')
-              }
-            </TabPanel>
+                  <TabPanel>
+                    {
+                      this.props.AnsweredQuestions.map((id) => (
+                        // console.log(question)
+                        <li key={id}>
+                          <Question isAnswered={true} key={id} id={id} />
+                        </li>
+                      ))
+                    }
+                  </TabPanel>
+                </Tabs>
+              </ul>) : (
+                <div className='container'>
+                  <h3 className='center'> Please Login First</h3>
+                  <Redirect to='/login' />
+                </div>
 
-          </Tabs>
-        </ul>
+              )
+          ) : (<h3 className='center'> Loading... </h3>)
+        }
+
       </div>
     )
   }
@@ -81,10 +95,10 @@ function mapStateToProps({ authed, questions }) {
   let UnansweredQuestions = []
   let questionsArray = json2array(questions)
 
- // console.log(questions)
+  // console.log(questions)
 
   questionsArray.map(q => {
-  //  console.log(q.id)
+    //  console.log(q.id)
     if (q.optionOne.votes.includes(authed.id) || q.optionTwo.votes.includes(authed.id)) {
       AnsweredQuestions.push(q.id)
     } else {
@@ -95,7 +109,8 @@ function mapStateToProps({ authed, questions }) {
 
   // console.log(AnsweredQuestions)
   // console.log(UnansweredQuestions)
-  
+  //console.log(authed.id === null )
+
 
   return {
     //users,
@@ -103,7 +118,7 @@ function mapStateToProps({ authed, questions }) {
     AnsweredQuestions,
     authed,
     questions_ids: Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp),
-    loading: Object.keys(questions).length === 0 && Object.keys(authed).length === 0 ? true : false
+    isLoading: Object.keys(questions).length === 0 && Object.keys(authed).length === 0 ? true : false
     //loading: Object.keys(users).length !== 0 && Object.keys(questions).length !== 0 ? true : false
 
   }

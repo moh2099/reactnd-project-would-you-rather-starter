@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { initState } from '../actions/initState'
 import { connect } from 'react-redux'
 import Home from './Home'
-import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, NavLink, Switch, Redirect, Link  } from 'react-router-dom'
 import CreateQuestion from './CreateQuestion'
+import Login from './Login'
+
 
 class App extends Component {
 
@@ -22,21 +24,22 @@ class App extends Component {
           <nav>
             <div className="nav-wrapper purple darken-1">
               <div className="row">
-                <div className="col s4">
-                  <a href="/" className="brand-logo padding-left-l10">would you rather</a>
+                <div className="col">
+                  <Link to="/home" className="brand-logo padding-left-l10">would you rather</Link>
                 </div>
-                <div className="col s4">
+                <div className="col s7">
                   {/* Empty col  */}
                 </div>
-                <div className="col s4">
+                <div className="col">
                   {
                     this.props.loading ? (
-                      authedUser !== null ?
+                      authedUser != null ? //NOTE: !== null doesn't work, the comparision will be true always since it will compare the type of the const with null where it is always type(const) != type(null). so always compare null with two operands only != or ==
                         (
                           <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li><NavLink to='/'>Home</NavLink></li>
-                            <li><NavLink to='/new'>Create Question</NavLink></li>
-                            <li><NavLink to='/Logout'>Logout</NavLink></li>
+                            <li><NavLink to='/home'>Home</NavLink></li>
+                            <li><NavLink to='/new'>New Questions</NavLink></li>
+                            <li><NavLink to='/leaderboard'>Leaderboard</NavLink></li>
+                            <li><NavLink to='/logout'>Logout</NavLink></li>
                             <li>
                               <span className="users-view-name red-text">{authedUser.name}</span>
                             </li>
@@ -44,14 +47,20 @@ class App extends Component {
                               <span className="users-view-id">ID: {authedUser.id}</span>
                             </li> */}
                             <li>
-                              <a href="/" className="avatar">
+                              <Link to="/home" className="avatar">
                                 <img src={authedUser.avatarURL} alt="users view avatar" className="z-depth-4 circle" width="50" height="50"></img>
-                              </a>
+                              </Link>
                             </li>
+                            <Redirect to='/home'/>
                           </ul>
 
-                        ) : (<li><NavLink to='/Login'>Login</NavLink></li>)
-                    ) : (<div className="title"><span>Loading...</span></div> )
+                        ) : (
+                          <ul id="nav-mobile" className="right hide-on-med-and-down">
+                             <li><NavLink to='/home'>home</NavLink></li>
+                            <li><NavLink to='/login'>Login</NavLink></li>
+                          </ul>
+                        )
+                    ) : ( <ul id="nav-mobile" className="right hide-on-med-and-down"><span>Loading</span><Redirect to='/home'/></ul>)
                   }
                 </div>
               </div>
@@ -61,9 +70,10 @@ class App extends Component {
 
           {/* <Dashboard props={this.props}/> wouln't work, you have to use route */}
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/home' component={Home} />
             <Route path='/new' component={CreateQuestion} />
-            <Route path='/Logout' component={''} />
+            <Route path='/login' component={Login} />
+            <Route path='/logout' component={''} />
           </Switch>
         </div>
       </Router>
