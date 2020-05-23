@@ -4,6 +4,8 @@ import Question from './Question'
 import { Tab, TabList, Tabs, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import { Redirect } from 'react-router-dom'
+import { json2array } from '../utils/json2array'
+
 //import { initState } from '../actions/initState'
 
 class Home extends Component {
@@ -64,6 +66,7 @@ class Home extends Component {
                 <div className='container'>
                   <h3 className='center'> Please Login First</h3>
                   <Redirect to='/login' />
+                  
                 </div>
 
               )
@@ -74,18 +77,7 @@ class Home extends Component {
     )
   }
 }
-
-
-function json2array(json) {
-  var result = [];
-  var keys = Object.keys(json);
-  keys.forEach(function (key) {
-    result.push(json[key]);
-  });
-  return result;
-}
-
-
+ 
 //Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
 
 //This function is used for passing the stateTree (contains all the states of all dispatched actions) into the props using the connect function

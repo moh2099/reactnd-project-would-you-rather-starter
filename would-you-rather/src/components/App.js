@@ -5,7 +5,8 @@ import Home from './Home'
 import { BrowserRouter as Router, Route, NavLink, Switch, Redirect, Link  } from 'react-router-dom'
 import CreateQuestion from './CreateQuestion'
 import Login from './Login'
-
+import Logout from './Logout'
+import 'materialize-css/dist/css/materialize.min.css';
 
 class App extends Component {
 
@@ -56,8 +57,7 @@ class App extends Component {
 
                         ) : (
                           <ul id="nav-mobile" className="right hide-on-med-and-down">
-                             <li><NavLink to='/home'>home</NavLink></li>
-                            <li><NavLink to='/login'>Login</NavLink></li>
+                             <li><NavLink to='/login'>Login</NavLink></li>
                           </ul>
                         )
                     ) : ( <ul id="nav-mobile" className="right hide-on-med-and-down"><span>Loading</span><Redirect to='/home'/></ul>)
@@ -73,7 +73,7 @@ class App extends Component {
             <Route exact path='/home' component={Home} />
             <Route path='/new' component={CreateQuestion} />
             <Route path='/login' component={Login} />
-            <Route path='/logout' component={''} />
+            <Route path='/logout' component={Logout} />
           </Switch>
         </div>
       </Router>
