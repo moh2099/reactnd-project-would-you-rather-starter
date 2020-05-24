@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Question from './Question'
 import { Tab, TabList, Tabs, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import { Redirect } from 'react-router-dom'
 import { json2array } from '../utils/json2array'
-
+import Poll from './Poll'
 //import { initState } from '../actions/initState'
 
 class Home extends Component {
@@ -23,9 +22,10 @@ class Home extends Component {
   //   //  console.log(this.props)
   // }
 
-  // rerender (){
-  //   this.forceUpdate()
-  // }
+  handleViewPoll = ({ question }) => {
+    this.props.history.push({ pathname: '/questions/' + question.id, question })
+  }
+
   render() {
     let authed = Object.keys(this.props.authed).length > 0 ? this.props.authed.id : null
     return (
@@ -45,7 +45,8 @@ class Home extends Component {
                       this.props.UnansweredQuestions.map((id) => (
                         // console.log(question)
                         <li key={id}>
-                          <Question isAnswered={false} key={id} id={id} />
+                          <Poll key={id} id={id} isAnswered={false} data={this.handleViewPoll} />
+                          {/* <Question isAnswered={false} key={id} id={id} /> */}
                         </li>
                       ))
                     }
@@ -56,7 +57,8 @@ class Home extends Component {
                       this.props.AnsweredQuestions.map((id) => (
                         // console.log(question)
                         <li key={id}>
-                          <Question isAnswered={true} key={id} id={id} />
+                          <Poll key={id} id={id} isAnswered={true} data={this.handleViewPoll} />
+                          {/* <Question isAnswered={true} key={id} id={id} /> */}
                         </li>
                       ))
                     }
@@ -66,7 +68,7 @@ class Home extends Component {
                 <div className='container'>
                   <h3 className='center'> Please Login First</h3>
                   <Redirect to='/login' />
-                  
+
                 </div>
 
               )
@@ -77,7 +79,7 @@ class Home extends Component {
     )
   }
 }
- 
+
 //Object.keys(questions).sort((a, b) => questions[b].timestamp - questions[a].timestamp)
 
 //This function is used for passing the stateTree (contains all the states of all dispatched actions) into the props using the connect function
@@ -87,10 +89,10 @@ function mapStateToProps({ authed, questions }) {
   let UnansweredQuestions = []
   let questionsArray = json2array(questions)
 
-  // console.log(questions)
+  questionsArray = questionsArray.sort((a, b) => b.timestamp - a.timestamp)
 
   questionsArray.map(q => {
-    //  console.log(q.id)
+
     if (q.optionOne.votes.includes(authed.id) || q.optionTwo.votes.includes(authed.id)) {
       AnsweredQuestions.push(q.id)
     } else {
@@ -98,6 +100,7 @@ function mapStateToProps({ authed, questions }) {
     }
     return ''
   })
+
 
   // console.log(AnsweredQuestions)
   // console.log(UnansweredQuestions)

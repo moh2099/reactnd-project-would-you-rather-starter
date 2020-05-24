@@ -26,10 +26,16 @@ export const getQuestions = () => {
     }))
 }
 
+export const getQuestion = (id) => { 
+    return Promise.all([
+        database._getQuestions()])
+    .then((questions) => ({ 
+        question: questions[id]
+    }))
+}
 
-
-export function saveQuestion (question) {
-    return database._saveQuestion(question)
+export function saveQuestion (data) { //`author`, `optionOneText`, and `optionTwoText`
+    return database._saveQuestion(data)
   }
   
 export function saveQuestionAnswer(data) { // data = { authedUser, qid, answer }      

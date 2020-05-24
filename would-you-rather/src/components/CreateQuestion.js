@@ -1,10 +1,33 @@
-import React, { Component } from 'react'
- 
+import React, { Component, createRef } from 'react'
+import { saveQuestion } from '../utils/api'
+import { connect } from 'react-redux'
+import { questionActionCreator } from '../actions/questionsActions'
+
 class CreateQuestion extends Component {
-    handleSubmit = (e) => { 
+    constructor() { //Refs should be declared in the constructor
+        super()    // this is a must, YOU MUST CALL SUPER CONSTRUCTOR otherwise you will get: [ReferenceError: must call super constructor before using 'this' in derived class constructor]
+        this.opt1 = createRef() // this should be also in the DOM element referenced as ( ref={this.opt1} )
+        this.opt2 = createRef()
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e.target);
-        
+        // console.log(this.opt1.current.value)
+        // console.log(this.opt2.current.value)
+        let author = this.props.authedUser.id
+        let optionOneText = this.opt1.current.value
+        let optionTwoText = this.opt2.current.value
+        let data = { author, optionOneText, optionTwoText }
+        saveQuestion(data).then(question => {
+ 
+            let newQuestion = {
+                [question.id]: question
+            }
+
+            this.props.dispatch(questionActionCreator(newQuestion))
+           // this.props.dispatch(reloadQuestions())
+            this.props.history.push('/home')
+        })
     }
     render() {
         return (
@@ -17,14 +40,14 @@ class CreateQuestion extends Component {
                             <form className="col s12" onSubmit={this.handleSubmit}>
                                 <div className="row">
                                     <div className="input-field col s12">
-                                        <input id="opt1" type="text"></input>
+                                        <input id="opt1" type="text" ref={this.opt1}></input>
                                         <label htmlFor="opt1" className="">Option 1</label>
                                     </div>
                                 </div>
                                 <h5>or</h5>
                                 <div className="row">
                                     <div className="input-field col s12">
-                                        <input id="opt2" type="text"></input>
+                                        <input id="opt2" type="text" ref={this.opt2}></input>
                                         <label htmlFor="opt2" className="">Option 2</label>
                                     </div>
                                 </div>
@@ -44,4 +67,10 @@ class CreateQuestion extends Component {
     }
 }
 
-export default CreateQuestion
+const mapStateToProps = ({ authed }) => { //authed is one of the state Object so destructuring it, returns its value, in other words, you can find it in state.authed
+    return {
+        authedUser: authed
+    }
+}
+
+export default connect(mapStateToProps)(CreateQuestion)

@@ -14,9 +14,9 @@ class Option extends Component {
 
     render() {
         //console.log(this.state)
-        
+
         const option = this.props.option
-       // const optNum = this.props.optNum
+        // const optNum = this.props.optNum
         const questionId = this.props.question
         const countVotes = Object.keys(option.votes).length
         // console.log(option);
@@ -24,7 +24,18 @@ class Option extends Component {
         return (
             <p onClick={this.handleClick}>
                 <label>
-                    <input className="with-gap" name={questionId} type="radio" value={option.text} />
+                    {
+                        this.props.selected ?
+
+                            (<input className="with-gap" name={questionId + 'Selected_Disabled'} type="radio" value={option.text} checked disabled={true} />) : (
+
+                                this.props.disabled ? (
+                                    <input className="with-gap" name={questionId + 'noneSelected_Disabled'} type="radio" value={option.text} disabled />
+                                ) :
+                                    (<input className="with-gap" name={questionId + 'nothing'} type="radio" value={option.text} />)
+                            )
+                    }
+
                     <span className='black-text text-darken-3'> {option.text} </span>
                 </label>
                 <span className="badge">{countVotes}</span>

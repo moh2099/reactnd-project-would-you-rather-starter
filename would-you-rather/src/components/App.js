@@ -7,6 +7,7 @@ import CreateQuestion from './CreateQuestion'
 import Login from './Login'
 import Logout from './Logout'
 import 'materialize-css/dist/css/materialize.min.css';
+import Question from './Question';
 
 class App extends Component {
 
@@ -38,7 +39,7 @@ class App extends Component {
                         (
                           <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><NavLink to='/home'>Home</NavLink></li>
-                            <li><NavLink to='/new'>New Questions</NavLink></li>
+                            <li><NavLink to='/add'>New Questions</NavLink></li>
                             <li><NavLink to='/leaderboard'>Leaderboard</NavLink></li>
                             <li><NavLink to='/logout'>Logout</NavLink></li>
                             <li>
@@ -71,7 +72,8 @@ class App extends Component {
           {/* <Dashboard props={this.props}/> wouln't work, you have to use route */}
           <Switch>
             <Route exact path='/home' component={Home} />
-            <Route path='/new' component={CreateQuestion} />
+            <Route path='/add' component={CreateQuestion} />
+            <Route path='/questions/:question_id' component={Question} />
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
           </Switch>
