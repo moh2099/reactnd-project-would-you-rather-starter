@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Option from './Option'
 import { submitAnswer } from '../actions/questionsActions'
-import { reloadQuestions } from '../actions/reload'
+import { reloadQuestions, reloadUsers } from '../actions/reload'
 import { Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -37,6 +37,7 @@ class Question extends Component {
             let data = this.state
             this.props.dispatch(submitAnswer(data))
             this.props.dispatch(reloadQuestions()) //dispatch questions again so that the Home component is rendered again
+            this.props.dispatch(reloadUsers())
             this.props.history.push('/home')
         }
     }

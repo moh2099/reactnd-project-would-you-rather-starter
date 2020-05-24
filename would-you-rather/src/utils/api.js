@@ -26,6 +26,15 @@ export const getQuestions = () => {
     }))
 }
 
+export const getUsers = () => { 
+    return Promise.all([
+        database._getUsers()])
+    .then((users) => ({ 
+        users
+    }))
+}
+
+
 export const getQuestion = (id) => { 
     return Promise.all([
         database._getQuestions()])

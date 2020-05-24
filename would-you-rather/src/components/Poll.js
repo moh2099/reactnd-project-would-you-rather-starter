@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Option from './Option'
-
+ 
 class Poll extends Component {
 
     handleSubmit = (e) => {
@@ -14,15 +14,34 @@ class Poll extends Component {
         })
     }
 
+    getNumOfVotes = (question) => { 
+        let opt1VotesCount = Object.keys(question.optionOne.votes).length
+        let opt2VotesCount = Object.keys(question.optionTwo.votes).length
+        let totalVotes = opt1VotesCount + opt2VotesCount
+        return {
+            opt1: opt1VotesCount,
+            opt2: opt2VotesCount,
+            total: totalVotes
+        }
+    }
+
+
+
     selectedAnswer = (question) => {
 
         let authedUser = this.props.authedUser
+        let numOfVotes = this.getNumOfVotes(question)
+        
+        let percentageOpt1 = Math.round((numOfVotes.opt1 * 100 / numOfVotes.total) * 100) / 100
+        let percentageOpt2 = Math.round((numOfVotes.opt2 * 100 / numOfVotes.total) * 100) / 100
 
         if (question.optionOne.votes.includes(authedUser)) {
             return(
                 <div>
                     <Option question={question.id} option={question.optionOne} data={this.handleSelection} optNum={'optionOne'} selected={true} disabled={true} />
+                    <span>{ `[ ${numOfVotes.opt1}  out of  ${numOfVotes.total}  votes ] (${ percentageOpt1 }%)`}</span>
                     <Option question={question.id} option={question.optionTwo} data={this.handleSelection} optNum={'optionTwo'} selected={false} disabled={true} />
+                    <span>{ `[ ${numOfVotes.opt2}  out of  ${numOfVotes.total}  votes ] (${ percentageOpt2 }%)`}</span>
                 </div>
             )
 
@@ -31,7 +50,9 @@ class Poll extends Component {
             return(
                 <div>
                     <Option question={question.id} option={question.optionOne} data={this.handleSelection} optNum={'optionOne'} selected={false} disabled={true} />
+                    <span>{ `[ ${numOfVotes.opt1}  out of  ${numOfVotes.total}  votes ] (${ percentageOpt1 }%) `}</span>
                     <Option question={question.id} option={question.optionTwo} data={this.handleSelection} optNum={'optionTwo'} selected={true} disabled={true} />
+                    <span>{ `[ ${numOfVotes.opt2}  out of  ${numOfVotes.total}  votes ] (${ percentageOpt2 }%) `}</span>
                 </div>
             )
 

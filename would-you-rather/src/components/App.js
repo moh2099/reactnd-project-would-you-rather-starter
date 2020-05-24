@@ -8,6 +8,7 @@ import Login from './Login'
 import Logout from './Logout'
 import 'materialize-css/dist/css/materialize.min.css';
 import Question from './Question';
+import Leaderboard from './Leaderboard';
 
 class App extends Component {
 
@@ -74,6 +75,7 @@ class App extends Component {
             <Route exact path='/home' component={Home} />
             <Route path='/add' component={CreateQuestion} />
             <Route path='/questions/:question_id' component={Question} />
+            <Route path='/leaderboard' component={Leaderboard} />
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
           </Switch>

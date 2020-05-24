@@ -2,7 +2,8 @@ import React, { Component, createRef } from 'react'
 import { saveQuestion } from '../utils/api'
 import { connect } from 'react-redux'
 import { questionActionCreator } from '../actions/questionsActions'
-
+import { reloadUsers } from '../actions/reload'
+    
 class CreateQuestion extends Component {
     constructor() { //Refs should be declared in the constructor
         super()    // this is a must, YOU MUST CALL SUPER CONSTRUCTOR otherwise you will get: [ReferenceError: must call super constructor before using 'this' in derived class constructor]
@@ -25,6 +26,7 @@ class CreateQuestion extends Component {
             }
 
             this.props.dispatch(questionActionCreator(newQuestion))
+            this.props.dispatch(reloadUsers())
            // this.props.dispatch(reloadQuestions())
             this.props.history.push('/home')
         })
